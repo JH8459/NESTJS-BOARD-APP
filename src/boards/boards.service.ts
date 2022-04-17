@@ -30,4 +30,10 @@ export class BoardsService {
     // 전달인자로 받은 id와 일치하는 board 1개를 반환한다
     return this.boards.find((board) => board.id === id);
   }
+
+  /* 전달인자로 id를 갖는 특정 ID 보드를 삭제하는 deleteBoard 메서드 선언 (리턴값이 없으므로 void 타입 사용) */
+  deleteBoard(id: string): void {
+    // 전달인자로 받은 id와 일치하는 board 1개를 제외 후 boards 배열을 재할당 해준다
+    this.boards = this.boards.filter((board) => board.id !== id);
+  }
 }
