@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { Board } from './board.model';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 
@@ -31,5 +31,14 @@ export class BoardsController {
   /* 특정 ID 게시글을 지우는 핸들러 */
   deleteBoard(@Param('id') id: string): void {
     this.boardsService.deleteBoard(id);
+  }
+
+  @Patch('/:id/status') // '/:param/status'로 Patch 요청 메서드 && id Param이 들어오는 경우
+  /* 특정 ID 게시글의 status를 업데이트하는 핸들러 */
+  updateBoardStatus(
+    @Param('id') id: string,
+    @Body('status') status: BoardStatus,
+  ): Board {
+    return this.boardsService.updateBoardStatus(id, status);
   }
 }
