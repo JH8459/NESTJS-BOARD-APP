@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Board } from './board.model';
 import { BoardsService } from './boards.service';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Controller('boards') // '/boards' 엔드포인트로 요청이 들어온 경우 (데코레이터 사용)
 export class BoardsController {
@@ -15,10 +16,8 @@ export class BoardsController {
 
   @Post() // Post 요청 메서드일 경우
   /* 게시물을 생성하는 핸들러(@Body body를 통해 요청에서 보내온 모든 body값을 가져올 수도 있다) */
-  createBoard(
-    @Body('title') title: string,
-    @Body('description') description: string,
-  ) {
-    return this.boardsService.createBoard(title, description);
+  createBoard(@Body() createBoardDto: CreateBoardDto): Board {
+    // 바디로 받을 프로퍼티들은 DTO로 정의, 사용
+    return this.boardsService.createBoard(CreateBoardDto);
   }
 }

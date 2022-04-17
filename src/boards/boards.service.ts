@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Board, BoardStatus } from './board.model';
 import { v1 as uuid } from 'uuid';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardsService {
@@ -10,8 +11,10 @@ export class BoardsService {
     // Board[] 형식으로 리턴값의 데이터 형식 선언
     return this.boards; // 모든 boards를 가져오는 Service
   }
-  /* 전달인자로 title과 description을 갖는 보드를 생성하는 createBoard Service 선언 */
-  createBoard(title: string, description: string) {
+  /* 전달인자로 CreateBoardDTO를 갖는 보드를 생성하는 createBoard Service 선언 */
+  createBoard(createBoardDto: CreateBoardDto) {
+    /* title과 description은 구조분해 할당으로 createBoardDto에서 꺼내어서 사용해준다 */
+    const { title, description } = createBoardDto;
     /* 만들어질 board는 Board 모델을 타입을 따른다 */
     const board: Board = {
       id: uuid(), // uuid 모듈을 이용한 유니크한 ID값 선언
