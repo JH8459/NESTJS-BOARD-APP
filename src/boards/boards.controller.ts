@@ -18,6 +18,6 @@ export class BoardsController {
   /* 게시물을 생성하는 핸들러(@Body body를 통해 요청에서 보내온 모든 body값을 가져올 수도 있다) */
   createBoard(@Body() createBoardDto: CreateBoardDto): Board {
     // 바디로 받을 프로퍼티들은 DTO로 정의, 사용
-    return this.boardsService.createBoard(CreateBoardDto);
+    return this.boardsService.createBoard(createBoardDto);
   }
 }
