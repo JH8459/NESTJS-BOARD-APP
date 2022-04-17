@@ -1,5 +1,3 @@
-/* board Model 파일 */
-
 export interface Board {
   // 모델을 정의하기 위한 interface (변수의 타입만을 체크한다)
   id: string;
