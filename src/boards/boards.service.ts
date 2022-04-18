@@ -36,8 +36,10 @@ export class BoardsService {
 
   /* 전달인자로 id를 갖는 특정 ID 보드를 삭제하는 deleteBoard 메서드 선언 (리턴값이 없으므로 void 타입 사용) */
   deleteBoard(id: string): void {
-    // 전달인자로 받은 id와 일치하는 board 1개를 제외 후 boards 배열을 재할당 해준다
-    this.boards = this.boards.filter((board) => board.id !== id);
+    // getBoardById 메서드 재활용, 존재하지 않는 ID를 삭제하려는 경우 에러메시지를 리턴한다
+    const found = this.getBoardById(id);
+    // found.id와 일치하는 board 1개를 제외 후 boards 배열을 재할당 해준다
+    this.boards = this.boards.filter((board) => board.id !== found.id);
   }
 
   /* 전달인자로 id와 status를 받아 특정 게시글 상태를 업데이트하는 updateBoardStatus 메서드 선언 */
