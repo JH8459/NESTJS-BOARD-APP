@@ -19,17 +19,8 @@ export class BoardsService {
   //   return this.boards; // 모든 boards를 가져온다
   // }
   /* 전달인자로 CreateBoardDTO를 갖는 보드를 생성하는 createBoard 메서드 선언 */
-  async createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
-    /* title과 description은 구조분해 할당으로 createBoardDto에서 꺼내어서 사용해준다 */
-    const { title, description } = createBoardDto;
-    /* 만들어질 board는 Board 모델을 타입을 따른다 */
-    const board = this.boardRepository.create({
-      title, // title: title,
-      description, // description: description,
-      status: BoardStatus.PUBLIC, // status값은 BoardStatus.PUBLIC으로 초기화한다
-    });
-    await this.boardRepository.save(board); // boardRepository에 지금 board를 데이터베이스에 save한다
-    return board; // 전달인자(title, description)값으로 만들어진 board를 생성한다
+  createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+    return this.boardRepository.createBoard(createBoardDto); // Repository 패턴 적용
   }
   /* 전달인자로 id를 갖는 특정 ID 보드를 찾는 getBoardById 메서드 선언 */
   async getBoardById(id: number): Promise<Board> {
