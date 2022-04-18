@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Board, BoardStatus } from './board.model';
 import { v1 as uuid } from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -27,8 +27,11 @@ export class BoardsService {
   }
   /* 전달인자로 id를 갖는 특정 ID 보드를 찾는 getBoardById 메서드 선언 */
   getBoardById(id: string): Board {
-    // 전달인자로 받은 id와 일치하는 board 1개를 반환한다
-    return this.boards.find((board) => board.id === id);
+    // 전달인자로 받은 id와 일치하는 board 1개를 found 변수에 담는다
+    const found = this.boards.find((board) => board.id === id);
+    // 만약 found가 없다면 NotFoundException 인스턴스를 호출한다 (404 에러))
+    if (!found) throw new NotFoundException(`Can't find Board with ID: ${id}`);
+    return found;
   }
 
   /* 전달인자로 id를 갖는 특정 ID 보드를 삭제하는 deleteBoard 메서드 선언 (리턴값이 없으므로 void 타입 사용) */
