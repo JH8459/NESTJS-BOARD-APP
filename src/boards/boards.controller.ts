@@ -10,6 +10,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { BoardStatus } from './board-status.enum';
+import { Board } from './board.entity';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
@@ -33,11 +34,11 @@ export class BoardsController {
   //   return this.boardsService.createBoard(createBoardDto);
   // }
 
-  // @Get('/:id') // '/'로 Get 요청 메서드 && id Param이 들어오는 경우
-  // /* 특정 ID 게시글을 가져오는 핸들러 */
-  // getBoardById(@Param('id') id: string): Board {
-  //   return this.boardsService.getBoardById(id);
-  // }
+  @Get('/:id') // '/'로 Get 요청 메서드 && id Param이 들어오는 경우
+  /* 특정 ID 게시글을 가져오는 핸들러 */
+  getBoardById(@Param('id') id: number): Promise<Board> {
+    return this.boardsService.getBoardById(id);
+  }
 
   // @Delete('/:id') // '/'로 Delete 요청 메서드 && id Param이 들어오는 경우
   // /* 특정 ID 게시글을 지우는 핸들러 */

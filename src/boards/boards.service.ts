@@ -2,10 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { BoardStatus } from './board-status.enum';
 import { v1 as uuid } from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { BoardRepository } from './board.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Board } from './board.entity';
 
 @Injectable()
 export class BoardsService {
-  // private boards: Board[] = []; // private를 사용하여 외부에서 접근 금지, Board[] 형식으로 데이터 타입 선언
+  constructor(
+    @InjectRepository(BoardRepository)
+    private boardRepository: BoardRepository,
+  ) {}
+
   // /* 모든 board를 반환하는 getBoards 메서드 선언 */
   // getAllBoards(): Board[] {
   //   // Board[] 형식으로 리턴값의 데이터 형식 선언
@@ -25,14 +32,14 @@ export class BoardsService {
   //   this.boards.push(board); // boards 배열에 지금 board를 push 한다
   //   return board; // 현재 전달인자(title, description)값으로 만들어진 board를 생성한다
   // }
-  // /* 전달인자로 id를 갖는 특정 ID 보드를 찾는 getBoardById 메서드 선언 */
-  // getBoardById(id: string): Board {
-  //   // 전달인자로 받은 id와 일치하는 board 1개를 found 변수에 담는다
-  //   const found = this.boards.find((board) => board.id === id);
-  //   // 만약 found가 없다면 NotFoundException 인스턴스를 호출한다 (404 에러))
-  //   if (!found) throw new NotFoundException(`Can't find Board with ID: ${id}`);
-  //   return found;
-  // }
+  /* 전달인자로 id를 갖는 특정 ID 보드를 찾는 getBoardById 메서드 선언 */
+  async getBoardById(id: number): Promise<Board> {
+    // 전달인자로 받은 id와 일치하는 board 1개를 found 변수에 담는다
+    const found = await this.boardRepository.findOne(id);
+    // 만약 found가 없다면 NotFoundException 인스턴스를 호출한다 (404 에러))
+    if (!found) throw new NotFoundException(`Can't find Board with ID: ${id}`);
+    return found;
+  }
 
   // /* 전달인자로 id를 갖는 특정 ID 보드를 삭제하는 deleteBoard 메서드 선언 (리턴값이 없으므로 void 타입 사용) */
   // deleteBoard(id: string): void {
