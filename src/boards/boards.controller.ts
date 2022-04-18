@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UsePipes,
@@ -40,11 +41,11 @@ export class BoardsController {
     return this.boardsService.getBoardById(id);
   }
 
-  // @Delete('/:id') // '/'로 Delete 요청 메서드 && id Param이 들어오는 경우
-  // /* 특정 ID 게시글을 지우는 핸들러 */
-  // deleteBoard(@Param('id') id: string): void {
-  //   this.boardsService.deleteBoard(id);
-  // }
+  @Delete('/:id') // '/'로 Delete 요청 메서드 && id Param이 들어오는 경우
+  /* 특정 ID 게시글을 지우는 핸들러 */
+  deleteBoard(@Param('id', ParseIntPipe) id): Promise<void> {
+    return this.boardsService.deleteBoard(id);
+  }
 
   // @Patch('/:id/status') // '/:param/status'로 Patch 요청 메서드 && id Param이 들어오는 경우
   // /* 특정 ID 게시글의 status를 업데이트하는 핸들러 */
