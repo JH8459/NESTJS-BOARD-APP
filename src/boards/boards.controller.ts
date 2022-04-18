@@ -26,13 +26,13 @@ export class BoardsController {
   //   return this.boardsService.getAllBoards(); // boardsService 안에서 만든 getAllBoards() 메서드를 호출한다
   // }
 
-  // @Post() // '/'로 Post 요청 메서드일 경우
-  // @UsePipes(ValidationPipe) // 핸들러-레벨 파이프 (빌트인 파이프 ValidationPipe 사용)
-  // /* 게시물을 생성하는 핸들러(@Body body를 통해 요청에서 보내온 모든 body값을 가져올 수도 있다) */
-  // createBoard(@Body() createBoardDto: CreateBoardDto): Board {
-  //   // 바디로 받을 프로퍼티들은 DTO로 정의해서 전달인자로 사용한다
-  //   return this.boardsService.createBoard(createBoardDto);
-  // }
+  @Post() // '/'로 Post 요청 메서드일 경우
+  @UsePipes(ValidationPipe) // 핸들러-레벨 파이프 (빌트인 파이프 ValidationPipe 사용)
+  /* 게시물을 생성하는 핸들러(@Body body를 통해 요청에서 보내온 모든 body값을 가져올 수도 있다) */
+  createBoard(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
+    // 바디로 받을 프로퍼티들은 DTO로 정의해서 전달인자로 사용한다
+    return this.boardsService.createBoard(createBoardDto);
+  }
 
   @Get('/:id') // '/'로 Get 요청 메서드 && id Param이 들어오는 경우
   /* 특정 ID 게시글을 가져오는 핸들러 */

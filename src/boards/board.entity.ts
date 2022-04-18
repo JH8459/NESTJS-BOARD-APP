@@ -15,7 +15,4 @@ export class Board extends BaseEntity {
 
   @Column()
   status: BoardStatus;
-
-  @Column()
-  name: string;
 }
