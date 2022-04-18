@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -15,6 +15,7 @@ export class BoardsController {
   }
 
   @Post() // '/'로 Post 요청 메서드일 경우
+  @UsePipes(ValidationPipe) // 핸들러-레벨 파이프 (빌트인 파이프 ValidationPipe 사용)
   /* 게시물을 생성하는 핸들러(@Body body를 통해 요청에서 보내온 모든 body값을 가져올 수도 있다) */
   createBoard(@Body() createBoardDto: CreateBoardDto): Board {
     // 바디로 받을 프로퍼티들은 DTO로 정의해서 전달인자로 사용한다
