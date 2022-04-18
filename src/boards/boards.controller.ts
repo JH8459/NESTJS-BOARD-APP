@@ -1,7 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
 @Controller('boards') // '/boards' 엔드포인트로 요청이 들어온 경우 (데코레이터 사용)
 export class BoardsController {
@@ -38,7 +49,7 @@ export class BoardsController {
   /* 특정 ID 게시글의 status를 업데이트하는 핸들러 */
   updateBoardStatus(
     @Param('id') id: string,
-    @Body('status') status: BoardStatus,
+    @Body('status', BoardStatusValidationPipe) status: BoardStatus, // 파라미터-레벨 커스텀 파이프 사용
   ): Board {
     return this.boardsService.updateBoardStatus(id, status);
   }
