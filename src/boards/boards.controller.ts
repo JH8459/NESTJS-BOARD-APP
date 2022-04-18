@@ -20,12 +20,11 @@ import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe'
 export class BoardsController {
   constructor(private boardsService: BoardsService) {} // 생성자 안에서 의존성 주입을 시행해준다
 
-  // @Get() // '/'로 (생략가능) Get 요청 메서드일 경우
-  // /* 모든 게시글을 가져오는 핸들러 */
-  // getAllBoard(): Board[] {
-  //   // Board[] 형식으로 데이터 타입 선언
-  //   return this.boardsService.getAllBoards(); // boardsService 안에서 만든 getAllBoards() 메서드를 호출한다
-  // }
+  @Get() // '/'로 (생략가능) Get 요청 메서드일 경우
+  /* 모든 게시글을 가져오는 핸들러 */
+  getAllBoard(): Promise<Board[]> {
+    return this.boardsService.getAllBoards(); // boardsService의 getAllBoards() 메서드를 호출한다
+  }
 
   @Post() // '/'로 Post 요청 메서드일 경우
   @UsePipes(ValidationPipe) // 핸들러-레벨 파이프 (빌트인 파이프 ValidationPipe 사용)

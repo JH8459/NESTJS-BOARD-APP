@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BoardStatus } from './board-status.enum';
-import { v1 as uuid } from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardRepository } from './board.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,15 +12,17 @@ export class BoardsService {
     private boardRepository: BoardRepository,
   ) {}
 
-  // /* 모든 board를 반환하는 getBoards 메서드 선언 */
-  // getAllBoards(): Board[] {
-  //   // Board[] 형식으로 리턴값의 데이터 형식 선언
-  //   return this.boards; // 모든 boards를 가져온다
-  // }
+  /* 모든 board를 반환하는 getBoards 메서드 선언 */
+  async getAllBoards(): Promise<Board[]> {
+    // boardRepository의 저장된 모든 값을 가져온다.
+    return this.boardRepository.find();
+  }
+
   /* 전달인자로 CreateBoardDTO를 갖는 보드를 생성하는 createBoard 메서드 선언 */
   createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
     return this.boardRepository.createBoard(createBoardDto); // Repository 패턴 적용
   }
+
   /* 전달인자로 id를 갖는 특정 ID 보드를 찾는 getBoardById 메서드 선언 */
   async getBoardById(id: number): Promise<Board> {
     // 전달인자로 받은 id와 일치하는 board 1개를 found 변수에 담는다
