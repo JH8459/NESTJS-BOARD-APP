@@ -47,12 +47,12 @@ export class BoardsController {
     return this.boardsService.deleteBoard(id);
   }
 
-  // @Patch('/:id/status') // '/:param/status'로 Patch 요청 메서드 && id Param이 들어오는 경우
-  // /* 특정 ID 게시글의 status를 업데이트하는 핸들러 */
-  // updateBoardStatus(
-  //   @Param('id') id: string,
-  //   @Body('status', BoardStatusValidationPipe) status: BoardStatus, // 파라미터-레벨 커스텀 파이프 사용
-  // ): Board {
-  //   return this.boardsService.updateBoardStatus(id, status);
-  // }
+  @Patch('/:id/status') // '/:param/status'로 Patch 요청 메서드 && id Param이 들어오는 경우
+  /* 특정 ID 게시글의 status를 업데이트하는 핸들러 */
+  updateBoardStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', BoardStatusValidationPipe) status: BoardStatus, // 파라미터-레벨 커스텀 파이프 사용
+  ): Promise<Board> {
+    return this.boardsService.updateBoardStatus(id, status);
+  }
 }

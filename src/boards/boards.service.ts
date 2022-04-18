@@ -41,13 +41,14 @@ export class BoardsService {
     }
   }
 
-  // /* 전달인자로 id와 status를 받아 특정 게시글 상태를 업데이트하는 updateBoardStatus 메서드 선언 */
-  // updateBoardStatus(id: string, status: BoardStatus): Board {
-  //   // 특정 id를 가진 board를 찾는다
-  //   const board = this.getBoardById(id);
-  //   // 특정 id를 가진 board의 상태값을 전달인자로 받은 status로 재할당해준다
-  //   board.status = status;
-  //   // 해당 board를 반환한다
-  //   return board;
-  // }
+  /* 전달인자로 id와 status를 받아 특정 게시글 상태를 업데이트하는 updateBoardStatus 메서드 선언 */
+  async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
+    // 특정 id를 가진 board를 찾는다
+    const board = await this.getBoardById(id);
+    // 특정 id를 가진 board의 상태값을 전달인자로 받은 status로 재할당해준뒤 DB에 저장한다
+    board.status = status;
+    await this.boardRepository.save(board);
+    // 해당 board를 반환한다
+    return board;
+  }
 }
